@@ -1,0 +1,25 @@
+environment: local  # local | cloud
+
+paths:
+  raw_dir: data/raw
+  staging_dir: data/staging
+  processed_dir: data/processed
+  sample_dir: data/sample
+  duckdb_path: warehouse/duckdb/sales.duckdb
+
+dataset:
+  name: synthetic_retail_sales
+  n_orders: 50000
+  start_date: "2023-01-01"
+  end_date: "2026-06-30"
+  seed: 42
+
+quality:
+  max_null_rate_warn: 0.05
+  cap_outlier_percentile: 0.99
+
+forecasting:
+  target_grain: monthly   # daily | monthly
+  horizon: 6
+  test_size_fraction: 0.2
+  moving_average_window: 3

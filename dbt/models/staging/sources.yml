@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: sales_staging
+        description: "Cleaned sales rows loaded by pipeline/load.py (post Python cleaning, pre-dbt)."

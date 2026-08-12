@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "One row per customer. Grain: customer_id."
+    columns:
+      - name: customer_key
+        tests: [not_null, unique]
+      - name: customer_id
+        tests: [not_null, unique]
+
+  - name: dim_product
+    description: "One row per product. Grain: product_id."
+    columns:
+      - name: product_key
+        tests: [not_null, unique]
+      - name: product_id
+        tests: [not_null, unique]
+
+  - name: dim_date
+    description: "One row per calendar day present in the sales data."
+    columns:
+      - name: date_day
+        tests: [not_null, unique]
+
+  - name: fact_sales
+    description: "Grain: one row per order line (sale_id)."
+    columns:
+      - name: sale_id
+        tests: [not_null, unique]
+      - name: order_id
+        tests: [not_null]
+      - name: customer_key
+        tests:
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_key
+      - name: product_key
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+      - name: revenue
+        tests: [not_null]
+
+  - name: sales_daily
+    description: "Daily revenue/order aggregates."
+    columns:
+      - name: order_date
+        tests: [not_null, unique]
+
+  - name: sales_monthly
+    description: "Monthly revenue with MoM/YoY growth."
+    columns:
+      - name: month_start
+        tests: [not_null, unique]

@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: int_customer_sales
+    description: "One row per customer with lifetime order/revenue aggregates."
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+  - name: int_product_sales
+    description: "One row per product with lifetime units/revenue aggregates."
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique

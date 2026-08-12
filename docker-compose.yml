@@ -1,0 +1,19 @@
+version: "3.9"
+
+# Only one service is needed: DuckDB is an embedded (file-based) database, not
+# a server, so it doesn't get its own container - it's just a file under
+# warehouse/duckdb/ that's shared with the host via a volume mount. Postgres/
+# extra services were deliberately left out (see docs/architecture.md #33 -
+# do not overengineer): they'd add operational weight with no benefit here.
+
+services:
+  python-pipeline:
+    build: .
+    container_name: sales_pipeline
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./warehouse/duckdb:/app/warehouse/duckdb
+      - ./models:/app/models
+    command: ["python", "-m", "pipeline.pipeline"]

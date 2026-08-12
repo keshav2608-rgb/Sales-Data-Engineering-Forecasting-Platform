@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_sales
+    description: "Cleaned, typed sales transactions - one row per order line."
+    columns:
+      - name: order_id
+        description: "Unique order identifier."
+        tests:
+          - not_null
+      - name: order_date
+        tests:
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+      - name: quantity
+        tests:
+          - not_null
+      - name: unit_price
+        tests:
+          - not_null
+      - name: sales
+        tests:
+          - not_null
+      - name: category
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Electronics', 'Furniture', 'Office Supplies', 'Apparel', 'Home & Kitchen', 'Unknown']

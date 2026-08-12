@@ -1,0 +1,17 @@
+sales_analytics:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: '../warehouse/duckdb/sales.duckdb'
+      schema: main
+      threads: 4
+
+    cloud:
+      type: bigquery
+      method: service-account
+      project: "{{ env_var('GOOGLE_CLOUD_PROJECT', 'your-gcp-project') }}"
+      dataset: "{{ env_var('BIGQUERY_DATASET', 'sales_analytics') }}"
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS', '') }}"
+      threads: 4
+      location: US
